@@ -122,7 +122,7 @@ const playNextSong = () => {
   }
 };
 
-const playPreviousSong = () =>{
+const playPreviousSong = () => {
    if (userData?.currentSong === null) return;
    else {
     const currentSongIndex = getCurrentSongIndex();
@@ -134,6 +134,17 @@ const playPreviousSong = () =>{
 
 const shuffle = () => {
   userData?.songs.sort(() => Math.random() - 0.5);
+  userData.currentSong = null;
+  userData.songCurrentTime = 0;
+
+  renderSongs(userData?.songs);
+  pauseSong();
+  setPlayerDisplay();
+  setPlayButtonAccessibleText();
+};
+
+const deleteSong = (id) => {
+  userData.songs = userData?.songs.filter((song) => song.id !== id);
   
 };
 
@@ -206,5 +217,7 @@ pauseButton.addEventListener("click",  pauseSong);
 nextButton.addEventListener("click", playNextSong);
 
 previousButton.addEventListener("click", playPreviousSong);
+
+shuffleButton.addEventListener("click", shuffle);
 
 renderSongs(userData?.songs);
